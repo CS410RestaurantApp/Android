@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:textAlignment="gravity" 
+    android:background="#2bb38f"
+    >
+	<ImageView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:src="@drawable/logo"
+	    
+	    android:contentDescription="@string/logoAlt"
+	     />    
+    <EditText
+        android:id="@+id/order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:hint="@string/table_number"
+        android:inputType="number"
+        android:textColor="#000000" />
+ 
+    <EditText
+        android:id="@+id/order2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="30dp"
+        android:hint="@string/Order"
+        android:textColor="#000000" />
+	<LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="match_parent"
+	    android:gravity="center_horizontal"
+	    android:paddingTop="10dp" >
+    <Button 
+        android:gravity="center"
+        android:id="@+id/sendOrder"
+        android:drawableTop="@drawable/sendorder"
+        android:text="@string/Send"
+        style="@style/homeButtons" />
+    </LinearLayout>
+
+</LinearLayout>
