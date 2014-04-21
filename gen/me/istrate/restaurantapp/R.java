@@ -1009,6 +1009,7 @@ containing a value of this type.
         public static final int checkbox=0x7f05002d;
         public static final int collapseActionView=0x7f05000d;
         public static final int default_activity_button=0x7f050028;
+        public static final int delete_order=0x7f050046;
         public static final int dialog=0x7f05000e;
         public static final int disableHome=0x7f050008;
         public static final int dropdown=0x7f05000f;
@@ -1119,7 +1120,7 @@ containing a value of this type.
         public static final int table_ready=0x7f03001d;
     }
     public static final class menu {
-        public static final int waiter=0x7f0c0000;
+        public static final int context_menu=0x7f0c0000;
     }
     public static final class string {
         public static final int Alert=0x7f0a0019;

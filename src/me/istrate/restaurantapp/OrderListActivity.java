@@ -1,7 +1,6 @@
 package me.istrate.restaurantapp;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,17 +8,18 @@ import org.json.JSONException;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.widget.AdapterView;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class OrderListActivity extends Activity {
 
@@ -27,6 +27,7 @@ public class OrderListActivity extends Activity {
 	int convert = 0;
 	
 	SharedPreferences prefs;
+	Editor editor;
 	JSONArray jsonArray = null;
 	
 	@Override
@@ -35,6 +36,7 @@ public class OrderListActivity extends Activity {
 		setContentView(R.layout.order_list);
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		editor = prefs.edit();
 
 		String json = prefs.getString("orders", "[]");
 		//get json array
@@ -60,19 +62,23 @@ public class OrderListActivity extends Activity {
 		}		
 		
 		ListView orderList = (ListView)findViewById(R.id.order_list);
+		
+		//register list for context menu
+		registerForContextMenu(orderList);
+		
 		ArrayAdapter<Order> adapter = new ArrayAdapter<Order>(this, android.R.layout.simple_list_item_1, m_Orders);
 		orderList.setAdapter(adapter);
 		
-		orderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position,
-					long id) {
-				Toast toast = Toast.makeText(getApplicationContext(), "Item at position " + position, Toast.LENGTH_LONG);
-				toast.show();
-			}
-			
-		});
+//		orderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view, int position,
+//					long id) {
+//				Toast toast = Toast.makeText(getApplicationContext(), "Item at position " + position, Toast.LENGTH_LONG);
+//				toast.show();
+//			}
+//			
+//		});
 	
 		Button addOrder = (Button) findViewById(R.id.order_button);
 		addOrder.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +88,39 @@ public class OrderListActivity extends Activity {
 				startActivity(intent);
 			}
 		});			
-		
+	}
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		getMenuInflater().inflate(R.menu.context_menu, menu);
+	}
+	
+	//removes one element from json array
+	public JSONArray removeElement(JSONArray oldArray, int pos) {
+		JSONArray newArray = new JSONArray();
+		for (int i = 0; i < oldArray.length(); i++) {
+			if (i != pos) {
+				try {
+					newArray.put(oldArray.getJSONObject(i));
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return newArray;
+	}
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo)item.getMenuInfo();
+		switch(item.getItemId()) {
+			case (R.id.delete_order):
+		        // Show message
+			jsonArray = removeElement(jsonArray, menuInfo.position);
+			editor.putString("orders", jsonArray.toString());
+			editor.commit();			
+	        break;
+		}
+		return true;
 	}
 }
