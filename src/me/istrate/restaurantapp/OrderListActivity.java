@@ -29,6 +29,7 @@ public class OrderListActivity extends Activity {
 	SharedPreferences prefs;
 	Editor editor;
 	JSONArray jsonArray = null;
+	ArrayAdapter<Order> adapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class OrderListActivity extends Activity {
 		//register list for context menu
 		registerForContextMenu(orderList);
 		
-		ArrayAdapter<Order> adapter = new ArrayAdapter<Order>(this, android.R.layout.simple_list_item_1, m_Orders);
+		adapter = new ArrayAdapter<Order>(this, android.R.layout.simple_list_item_1, m_Orders);
 		orderList.setAdapter(adapter);
 	
 		Button addOrder = (Button) findViewById(R.id.order_button);
@@ -107,7 +108,8 @@ public class OrderListActivity extends Activity {
 		        // Show message
 			jsonArray = removeElement(jsonArray, menuInfo.position);
 			editor.putString("orders", jsonArray.toString());
-			editor.commit();			
+			editor.commit();		
+			adapter.remove(adapter.getItem(menuInfo.position));
 	        break;
 		}
 		return true;

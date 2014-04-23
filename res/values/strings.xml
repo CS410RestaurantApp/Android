@@ -12,6 +12,6 @@
 	<string name="Order">Order</string>
 	<string name="table_title">Table</string>
 	<string name="table_number">Enter Table Number</string>
-	<string name="New_Order">TEST</string>
+	<string name="New_Order">New Order</string>
 	<string name="Alert">Alerts</string>
 </resources>
