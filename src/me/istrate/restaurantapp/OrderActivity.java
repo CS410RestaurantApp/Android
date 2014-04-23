@@ -23,7 +23,6 @@ public class OrderActivity extends Activity {
 
 	JSONArray m_Orders = null;
 	JSONObject m_Order = new JSONObject();
-	
 	SharedPreferences prefs;
 	Editor editor;
 		
