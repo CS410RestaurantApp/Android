@@ -68,17 +68,6 @@ public class OrderListActivity extends Activity {
 		
 		ArrayAdapter<Order> adapter = new ArrayAdapter<Order>(this, android.R.layout.simple_list_item_1, m_Orders);
 		orderList.setAdapter(adapter);
-		
-//		orderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view, int position,
-//					long id) {
-//				Toast toast = Toast.makeText(getApplicationContext(), "Item at position " + position, Toast.LENGTH_LONG);
-//				toast.show();
-//			}
-//			
-//		});
 	
 		Button addOrder = (Button) findViewById(R.id.order_button);
 		addOrder.setOnClickListener(new View.OnClickListener() {
