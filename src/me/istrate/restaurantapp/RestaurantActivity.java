@@ -12,9 +12,11 @@ public class RestaurantActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_restaurant);
 		Button tableReady = (Button) findViewById(R.id.tableReady);
+		ListenServer listen = new ListenServer();
+		new Thread(listen).start();
 		tableReady.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v)    //button listener for table ready
+			public void onClick(View v) 
 			{
 				Intent intent = new Intent(RestaurantActivity.this, TableReadyActivity.class);
 				startActivity(intent);
@@ -22,7 +24,7 @@ public class RestaurantActivity extends Activity {
 		});		
 		
 		Button Order = (Button) findViewById(R.id.ordersbtn);
-		Order.setOnClickListener(new View.OnClickListener() {   //go to list order screen
+		Order.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) 
 			{
@@ -31,7 +33,7 @@ public class RestaurantActivity extends Activity {
 			}
 		});	
 		
-		Button Alert = (Button) findViewById(R.id.alertbtn);   //goes to list of alerts
+		Button Alert = (Button) findViewById(R.id.alertbtn);
 		Alert.setOnClickListener(new View.OnClickListener() {
 			
 			@Override

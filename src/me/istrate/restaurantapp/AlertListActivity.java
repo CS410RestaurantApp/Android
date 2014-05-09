@@ -22,20 +22,20 @@ import android.widget.ListView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class AlertListActivity extends Activity {
-	private ArrayList < Alert > m_Alerts = new ArrayList< Alert >();  //array for alerts
+	private ArrayList < Alert > m_Alerts = new ArrayList< Alert >();
 	int convert = 0;
 	
 	SharedPreferences prefs;
 	Editor editor;
 	JSONArray jsonArray = null;
-	ArrayAdapter<Alert> adapter;  //adapter for the array
+	ArrayAdapter<Alert> adapter;
 	
 	//
 	JSONObject dummy = new JSONObject();
 	
 	//
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {  
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.alert_layout);
 
@@ -60,14 +60,14 @@ public class AlertListActivity extends Activity {
 			e1.printStackTrace();
 		}
 		//
-		for (int i = 0; i < jsonArray.length(); i++) {     //this lists the array of alerts
+		for (int i = 0; i < jsonArray.length(); i++) {
 			String alertContent = "";
 			try {
 				alertContent = jsonArray.getJSONObject(i).get("Alert").toString();
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			m_Alerts.add(new Alert().AlertContent(alertContent));   //adds alert
+			m_Alerts.add(new Alert().AlertContent(alertContent));
 		}		
 		
 		ListView alertList = (ListView)findViewById(R.id.alert_list);
@@ -81,16 +81,16 @@ public class AlertListActivity extends Activity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
-		getMenuInflater().inflate(R.menu.context_menu, menu);   //creates a delete context menu
+		getMenuInflater().inflate(R.menu.context_menu, menu);
 	}
 	
 	//removes one element from json array
 	public JSONArray removeElement(JSONArray oldArray, int pos) {
-		JSONArray newArray = new JSONArray();             //passes array and position to delete
+		JSONArray newArray = new JSONArray();
 		for (int i = 0; i < oldArray.length(); i++) {
 			if (i != pos) {
 				try {
-					newArray.put(oldArray.getJSONObject(i));  //creates new array
+					newArray.put(oldArray.getJSONObject(i));
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -100,15 +100,15 @@ public class AlertListActivity extends Activity {
 	}
 	
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {    //removes the item
+	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo)item.getMenuInfo();
 		switch(item.getItemId()) {
-			case (R.id.delete_item):
+			case (R.id.delete_order):
 		        // Show message
 			jsonArray = removeElement(jsonArray, menuInfo.position);
 			editor.putString("alerts", jsonArray.toString());
 			editor.commit();		
-			adapter.remove(adapter.getItem(menuInfo.position));     
+			adapter.remove(adapter.getItem(menuInfo.position));
 	        break;
 		}
 		return true;

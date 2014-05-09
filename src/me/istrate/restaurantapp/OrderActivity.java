@@ -1,5 +1,13 @@
 package me.istrate.restaurantapp;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +18,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -47,7 +54,7 @@ public class OrderActivity extends Activity {
 		mEdit = (EditText)findViewById(R.id.order2);
 		mEdit2 = (EditText)findViewById(R.id.order);
 
-		Button sendOrder = (Button) findViewById(R.id.sendOrder);  //button to send order
+		Button sendOrder = (Button) findViewById(R.id.sendOrder);
 		sendOrder.setOnClickListener(new OnClickListener() {
 	
 			@Override
@@ -55,7 +62,7 @@ public class OrderActivity extends Activity {
 				String number = mEdit2.getText().toString();
 				String tableOrder = mEdit.getText().toString();
 				try {
-					m_Order.put("Order", tableOrder);          //put table and order in array
+					m_Order.put("Order", tableOrder);
 					m_Order.put("Table", number);
 					m_Orders.put(m_Order);					
 				} catch (JSONException e) {
@@ -63,11 +70,46 @@ public class OrderActivity extends Activity {
 					e.printStackTrace();
 				}
 				editor.putString("orders", m_Orders.toString());
+				
 				editor.commit();
+				String str = m_Order.toString();
+				 Thread cThread = new Thread(new SendOrder(str));
+				 cThread.start();
 				Intent intent = new Intent(OrderActivity.this, OrderListActivity.class);
 				startActivity(intent);
 			}
 		});	
+	}
+	public class SendOrder implements Runnable {
+		public String order ;
+		public SendOrder(String str) {
+			order = str;
+		}
+        public void run() {
+        	InetAddress serverAddr = null;
+        	try {
+				serverAddr = InetAddress.getByName(GlobalV.serverIP);
+			} catch (UnknownHostException e1) {
+				e1.printStackTrace();
+			}
+                Socket socket = null;
+				try {
+					socket = new Socket(serverAddr,GlobalV.sendingPortOrders);
+				} catch (UnknownHostException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+                PrintWriter out = null;
+				try {
+					out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+					out.println(order);
+                 
+        }
 	}
 }
 

@@ -7,20 +7,20 @@ public class Alert {
 	public Alert() {}
 	
 	//builder pattern
-	public Alert AlertContent(String s) {  //returns a string of arrays for alerts
+	public Alert AlertContent(String s) {
 		m_sAlert = s;
 		return this;
 	}
 	
-	public void setAlert(String s) {  //sets alerts
+	public void setAlert(String s) {
 		m_sAlert = s;
 	}
 	
-	public String getAlert() {      //gets alerts
+	public String getAlert() {
 		return m_sAlert;
 	}
 	@Override
 	public String toString() {
-		return "Alert: " + getAlert();  //string that goes before alert
+		return "Alert: " + getAlert();
 	}
 }

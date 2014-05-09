@@ -24,12 +24,12 @@ import android.widget.ListView;
 public class OrderListActivity extends Activity {
 
 	private ArrayList < Order > m_Orders = new ArrayList< Order >();
-	int convert = 0;                                                 //array of orders
+	int convert = 0;
 	
 	SharedPreferences prefs;
 	Editor editor;
 	JSONArray jsonArray = null;
-	ArrayAdapter<Order> adapter;                       //JSON holder
+	ArrayAdapter<Order> adapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class OrderListActivity extends Activity {
 		setContentView(R.layout.order_list);
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		editor = prefs.edit();            //edits preferences
+		editor = prefs.edit();
 
 		String json = prefs.getString("orders", "[]");
 		//get json array
@@ -51,13 +51,13 @@ public class OrderListActivity extends Activity {
 			int tableNr = 0;
 			String sTableNr = "";
 			String orderContent = "";
-			try {                                  //Gets table and orders from JSON obejects
+			try {
 				sTableNr = jsonArray.getJSONObject(i).get("Table").toString();
 				orderContent = jsonArray.getJSONObject(i).get("Order").toString();
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			
+			//mothafucka
 			tableNr = Integer.parseInt(sTableNr+0) / 10;
 			m_Orders.add(new Order().TableNumber(tableNr).OrderContent(orderContent));
 		}		
@@ -68,9 +68,9 @@ public class OrderListActivity extends Activity {
 		registerForContextMenu(orderList);
 		
 		adapter = new ArrayAdapter<Order>(this, android.R.layout.simple_list_item_1, m_Orders);
-		orderList.setAdapter(adapter);              
+		orderList.setAdapter(adapter);
 	
-		Button addOrder = (Button) findViewById(R.id.order_button);  //button to add order
+		Button addOrder = (Button) findViewById(R.id.order_button);
 		addOrder.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -104,10 +104,10 @@ public class OrderListActivity extends Activity {
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo)item.getMenuInfo();
 		switch(item.getItemId()) {
-			case (R.id.delete_item):
+			case (R.id.delete_order):
 		        // Show message
 			jsonArray = removeElement(jsonArray, menuInfo.position);
-			editor.putString("orders", jsonArray.toString());       //updates the array and shows
+			editor.putString("orders", jsonArray.toString());
 			editor.commit();		
 			adapter.remove(adapter.getItem(menuInfo.position));
 	        break;
