@@ -47,7 +47,7 @@ public class OrderActivity extends Activity {
 		mEdit = (EditText)findViewById(R.id.order2);
 		mEdit2 = (EditText)findViewById(R.id.order);
 
-		Button sendOrder = (Button) findViewById(R.id.sendOrder);
+		Button sendOrder = (Button) findViewById(R.id.sendOrder);  //button to send order
 		sendOrder.setOnClickListener(new OnClickListener() {
 	
 			@Override
@@ -55,7 +55,7 @@ public class OrderActivity extends Activity {
 				String number = mEdit2.getText().toString();
 				String tableOrder = mEdit.getText().toString();
 				try {
-					m_Order.put("Order", tableOrder);
+					m_Order.put("Order", tableOrder);          //put table and order in array
 					m_Order.put("Table", number);
 					m_Orders.put(m_Order);					
 				} catch (JSONException e) {

@@ -1,29 +1,29 @@
 package me.istrate.restaurantapp;
 
-public class Order {
+public class Order {        //order objects
 	
-	private int m_iTableNumber;
-	private String m_sOrder;
+	private int m_iTableNumber; //table holder
+	private String m_sOrder;   //order holder
 	
 	public Order() {}
 	
 	//builder pattern
 	public Order TableNumber(int i) {
-		m_iTableNumber = i;
+		m_iTableNumber = i;                     //returns table number info
 		return this;
 	}
 	public Order OrderContent(String s) {
-		m_sOrder = s;
+		m_sOrder = s;                          //returns order info
 		return this;
 	}
 	
 	public void setTableNumber(int i) {
-		m_iTableNumber = i;
+		m_iTableNumber = i;                     //returns table num var
 	}
 	
-	public void setOrder(String s) {
+	public void setOrder(String s) {         
 		m_sOrder = s;
-	}
+	}                                               //returns order string
 	
 	public String getOrder() {
 		return m_sOrder;
@@ -34,6 +34,6 @@ public class Order {
 	
 	@Override
 	public String toString() {
-		return "Table nr: " + getTableNumber() + " Order is: " + getOrder();
+		return "Table #: " + getTableNumber() + " Order is: " + getOrder();
 	}
 }

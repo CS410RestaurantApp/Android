@@ -47,7 +47,7 @@
     	</LinearLayout>
 
     	<Button
-    	    android:id="@+id/sendOrder"
+    	    android:id="@+id/sendtable"
     	    style="@style/homeButtons"
     	    android:layout_height="wrap_content"
     	    android:layout_marginTop="20dp"
