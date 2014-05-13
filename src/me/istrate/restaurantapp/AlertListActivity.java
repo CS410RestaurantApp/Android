@@ -7,29 +7,40 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class AlertListActivity extends Activity {
 	private ArrayList < Alert > m_Alerts = new ArrayList< Alert >();
 	int convert = 0;
 	
+	//shared prefs and json
 	SharedPreferences prefs;
 	Editor editor;
 	JSONArray jsonArray = null;
 	ArrayAdapter<Alert> adapter;
 	
+	//notifications
+	NotificationCompat.Builder mBuilder =
+		    new NotificationCompat.Builder(this)
+		    .setSmallIcon(R.drawable.smallalert)
+		    .setContentTitle("Restaurant ALert System")
+		    .setContentText("You have restaurant alerts!");	
+	
+
 //	//
 //	JSONObject dummy = new JSONObject();
 //	
@@ -59,7 +70,7 @@ public class AlertListActivity extends Activity {
 //		} catch (JSONException e1) {
 //			e1.printStackTrace();
 //		}
-		//
+		
 		for (int i = 0; i < jsonArray.length(); i++) {
 			String alertContent = "";
 			try {
@@ -77,6 +88,24 @@ public class AlertListActivity extends Activity {
 		
 		adapter = new ArrayAdapter<Alert>(this, android.R.layout.simple_list_item_1, m_Alerts);
 		alertList.setAdapter(adapter);	
+		
+		NotificationManager mNotifyMgr = 
+		        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		if (jsonArray.length() > 0) {
+			Intent resultIntent = new Intent(this, AlertListActivity.class);
+			PendingIntent resultPendingIntent =
+				    PendingIntent.getActivity(
+				    this,
+				    0,
+				    resultIntent,
+				    PendingIntent.FLAG_UPDATE_CURRENT);
+			mBuilder.setContentIntent(resultPendingIntent);
+			int mNotificationId = 001;
+			mNotifyMgr.notify(mNotificationId, mBuilder.build());
+		}
+		else {
+			mNotifyMgr.cancel(001);
+		}
 	}
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
