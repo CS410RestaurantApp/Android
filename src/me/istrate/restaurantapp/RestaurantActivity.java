@@ -12,7 +12,7 @@ public class RestaurantActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_restaurant);
 		Button tableReady = (Button) findViewById(R.id.tableReady);
-		ListenServer listen = new ListenServer();
+		ListenServer listen = new ListenServer(getApplicationContext());
 		new Thread(listen).start();
 		tableReady.setOnClickListener(new View.OnClickListener() {
 			@Override

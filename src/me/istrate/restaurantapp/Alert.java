@@ -21,6 +21,6 @@ public class Alert {
 	}
 	@Override
 	public String toString() {
-		return "Alert: " + getAlert();
+		return getAlert() + " is ready!";
 	}
 }

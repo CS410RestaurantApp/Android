@@ -30,10 +30,10 @@ public class AlertListActivity extends Activity {
 	JSONArray jsonArray = null;
 	ArrayAdapter<Alert> adapter;
 	
-	//
-	JSONObject dummy = new JSONObject();
-	
-	//
+//	//
+//	JSONObject dummy = new JSONObject();
+//	
+//	//
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,12 +53,12 @@ public class AlertListActivity extends Activity {
 		}
 		
 		//this is where you put alerts as objects oherwise look for comments in header
-		try {
-			dummy.put("Alert", "Some Alert Goes Here");
-			jsonArray.put(dummy);
-		} catch (JSONException e1) {
-			e1.printStackTrace();
-		}
+//		try {
+//			dummy.put("Alert", "Some Alert Goes Here");
+//			jsonArray.put(dummy);
+//		} catch (JSONException e1) {
+//			e1.printStackTrace();
+//		}
 		//
 		for (int i = 0; i < jsonArray.length(); i++) {
 			String alertContent = "";
